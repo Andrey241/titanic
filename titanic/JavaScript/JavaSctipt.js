@@ -123,18 +123,20 @@ function checkListFunction() {
 
 //Поиск значений из фильтра. Вызов производится из HTML
 function filterSearch() {
-  const td = document.querySelectorAll("td");
-  const tr = document.querySelectorAll("td");
-  const th = document.createElement("th");
-  const inputValue = input.value.toUpperCase();
-  for (i = 0; i < td.length; i++) {
-    tr = td[i][0];
-    if (tr) {
-      if (tr.innerHTML.toUpperCase().indexOf(inputValue) > -1) {
-        td[i].style.display = "";
-      } else {
-        td[i].style.display = "none";
-      }
+  var phrase = document.getElementById("search-text");
+  var table = document.getElementById("info-table");
+  var regPhrase = new RegExp(phrase.value, "i");
+  var flag = false;
+  for (var i = 1; i < table.rows.length; i++) {
+    flag = false;
+    for (var j = table.rows[i].cells.length - 1; j >= 0; j--) {
+      flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+      if (flag) break;
+    }
+    if (flag) {
+      table.rows[i].style.display = "";
+    } else {
+      table.rows[i].style.display = "none";
     }
   }
 }
