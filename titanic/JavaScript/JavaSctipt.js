@@ -51,6 +51,7 @@ btnAdd.addEventListener("click", (e) => {
         item.remove();
       });
       checkClick = 1;
+      input.value = "";
       return;
     }
   });
@@ -122,8 +123,8 @@ function checkListFunction() {
 }
 
 //Поиск значений из фильтра. Вызов производится из HTML
+var phrase = document.getElementById("search-text");
 function filterSearch() {
-  var phrase = document.getElementById("search-text");
   var table = document.getElementById("info-table");
   var regPhrase = new RegExp(phrase.value, "i");
   var flag = false;
