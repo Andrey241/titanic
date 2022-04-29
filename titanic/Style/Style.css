@@ -129,6 +129,9 @@ body {
   border-collapse: collapse;
   position: relative;
 }
+.table tbody {
+  background-color: rgba(204, 204, 204, 0.164);
+}
 .table thead {
   position: sticky;
   top: 0px;
@@ -161,4 +164,19 @@ body {
   display: grid;
   row-gap: 10px;
   grid-template: repeat(3, 1fr) / repeat(5, 200px);
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+}
+
+.button input {
+  margin-top: 10px;
+  border: 1px solid #ccc;
+  transition: background-color 1s ease-in;
+}
+
+.button input:focus {
+  background-color: rgb(212, 211, 211);
 }
