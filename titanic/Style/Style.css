@@ -144,20 +144,24 @@ body {
 .table tr th:last-child {
   border-right: none;
 }
-
+/* фильтр */
 .nav {
   margin-bottom: 20px;
 }
-
 .nav-list {
   display: grid;
   row-gap: 10px;
   grid-template: repeat(3, 1fr) / repeat(5, 200px);
 }
 
+/* кнопки */
 .button {
   display: flex;
   justify-content: center;
+}
+.button-sort {
+  display: flex;
+  justify-content: space-around;
 }
 
 .btn {

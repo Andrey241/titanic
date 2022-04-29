@@ -17,12 +17,15 @@
             <nav class="nav">
 
             </nav>
-            <div class="button">
+            <div class="button-add">
                <button class="btn btn-add">
                   add passenger
                </button>
-
-
+               <label for="filter">
+                  <input id="search-text" type="text" onkeyup="filterSearch()" name="filter" placeholder="enter filter">
+               </label>
+            </div>
+            <div class="button-sort">
                <button class="btn btn-sort-id">
                   sort id
                </button>
@@ -44,13 +47,7 @@
                <button class="btn btn-sort-fare">
                   sort fare
                </button>
-
-
-               <label for="filter">
-                  <input id="search-text" type="text" onkeyup="filterSearch()" name="filter" placeholder="enter filter">
-               </label>
             </div>
-
 
             <div class="table-menu">
                <div class="body-table">

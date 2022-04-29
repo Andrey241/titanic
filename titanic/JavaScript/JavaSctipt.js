@@ -55,14 +55,8 @@ btnAdd.addEventListener("click", (e) => {
       checkSort(checkListArray);
       return;
     } else if (checkClick === false) {
-      checkListArray = [];
-      const allCreateTr = document.querySelectorAll("tr");
-      allCreateTr.forEach((item, index, array) => {
-        tbody.innerHTML = "";
-        item.remove();
-      });
-      checkClick = true;
-      input.value = "";
+      clearElements();
+
       return;
     }
   });
@@ -161,8 +155,11 @@ function valueList(el) {
         if (key == checkListArray[jey]) {
           const td = document.createElement("td");
           td.innerHTML = item[key];
-          //добавляем атрибут, равный значению элемента для последующей сортировки
+          if (item[key] == null) {
+            td.style.backgroundColor = "red";
+          }
           if (key == "age") {
+            //добавляем атрибут, равный значению элемента для последующей сортировки
             tr.setAttribute("data-age", item[key]);
           }
           if (key == "id") {
@@ -284,7 +281,22 @@ function checkSort(array) {
     }
   }
 }
-
+//Чистит результаты поиска и фильтры
+function clearElements() {
+  const allCreateTr = document.querySelectorAll("tr");
+  const btnSort = document.querySelectorAll(".button-sort button");
+  allCreateTr.forEach((item, index, array) => {
+    tbody.innerHTML = "";
+    item.remove();
+  });
+  btnSort.forEach((item, index, array) => {
+    item.style.display = "none";
+  });
+  checkListArray = [];
+  checkClick = true;
+  input.value = "";
+}
+//Функции сортировки
 function sortAttributeAge() {
   const collection = document.querySelectorAll("[data-age]");
   const tbody = document.querySelector("tbody");
