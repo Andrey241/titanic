@@ -95,17 +95,6 @@ body {
   box-shadow: 0px -4px 49px 8px rgba(34, 60, 80, 0.4);
 }
 
-.btn {
-  background-color: white;
-  color: #191919;
-  text-transform: uppercase;
-  font-size: 15px;
-  font-weight: 900;
-  padding: 10px 0px;
-  width: 150px;
-  border-radius: 15px;
-}
-
 /* Чекбоксы */
 .nav {
   display: flex;
@@ -169,6 +158,27 @@ body {
 .button {
   display: flex;
   justify-content: center;
+}
+
+.btn {
+  background-color: white;
+  color: #191919;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 900;
+  padding: 10px 0px;
+  width: 150px;
+  border-radius: 15px;
+}
+
+.btn-sort-age,
+.btn-sort-id,
+.btn-sort-class,
+.btn-sort-sibsp,
+.btn-sort-parch,
+.btn-sort-ticket,
+.btn-sort-fare {
+  display: none;
 }
 
 .button input {

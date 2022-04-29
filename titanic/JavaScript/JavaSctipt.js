@@ -1,5 +1,14 @@
 //кнопка - обработчик события
 const btnAdd = document.querySelector(".btn-add");
+//кнопка сортировки возраста
+const btnSortId = document.querySelector(".btn-sort-id");
+const btnSortClass = document.querySelector(".btn-sort-class");
+const btnSortAge = document.querySelector(".btn-sort-age");
+const btnSortSibsp = document.querySelector(".btn-sort-sibsp");
+const btnSortParch = document.querySelector(".btn-sort-parch");
+const btnSortTicket = document.querySelector(".btn-sort-ticket");
+const btnSortFare = document.querySelector(".btn-sort-fare");
+
 //элементы таблицы
 const tableMenu = document.querySelector(".table-menu");
 const thead = document.querySelector(".thead");
@@ -13,7 +22,8 @@ let checkListArray = [];
 const input = document.querySelector("input");
 
 //обработчик события нажатия кнопки
-let checkClick = 1;
+let checkClick = true;
+let isSorted = true;
 
 //Получаем данные с JSON
 function getPassenger(cb) {
@@ -28,33 +38,105 @@ function getPassenger(cb) {
   });
   xhr.send();
 }
-//Вызываем функцию, которая сообщает какие ключи есть в объекте, все эти ключи отобразятся в виде чек-боксов на страницы
+//Вызываем функцию, которая сообщает какие ключи есть в объекте и вызываем функцию, которая все эти ключи отобразит в виде чек-боксов на странице
 getPassenger((titanicList) => {
   CheckBox(titanicList);
 });
 
-//Вешаем событие на кнопку
+//Вешаем событие на кнопку добавить пассажиров
 btnAdd.addEventListener("click", (e) => {
   getPassenger((titanicList) => {
-    if (checkClick === 1) {
+    if (checkClick === true) {
       checkListFunction();
       valueList(titanicList);
       tableMenu.style.backgroundColor = "white";
       lazyLoad();
-      checkClick = 0;
+      checkClick = false;
+      checkSort(checkListArray);
       return;
-    } else if (checkClick === 0) {
+    } else if (checkClick === false) {
       checkListArray = [];
       const allCreateTr = document.querySelectorAll("tr");
       allCreateTr.forEach((item, index, array) => {
         tbody.innerHTML = "";
         item.remove();
       });
-      checkClick = 1;
+      checkClick = true;
       input.value = "";
       return;
     }
   });
+});
+
+//Вешаем событие на кнопку сортировки пользователей
+btnSortAge.addEventListener("click", (e) => {
+  if (isSorted) {
+    sortAttributeAge();
+    isSorted = false;
+  } else {
+    sortAttributeAgeReverse();
+    isSorted = true;
+  }
+});
+
+btnSortId.addEventListener("click", (e) => {
+  if (isSorted) {
+    sortAttributeId();
+    isSorted = false;
+  } else {
+    sortAttributeIdReverse();
+    isSorted = true;
+  }
+});
+
+btnSortClass.addEventListener("click", (e) => {
+  if (isSorted) {
+    sortAttributeClass();
+    isSorted = false;
+  } else {
+    sortAttributeClassReverse();
+    isSorted = true;
+  }
+});
+
+btnSortSibsp.addEventListener("click", (e) => {
+  if (isSorted) {
+    sortAttributeSibsp();
+    isSorted = false;
+  } else {
+    sortAttributeSibspReverse();
+    isSorted = true;
+  }
+});
+
+btnSortParch.addEventListener("click", (e) => {
+  if (isSorted) {
+    sortAttributeParch();
+    isSorted = false;
+  } else {
+    sortAttributeParchReverse();
+    isSorted = true;
+  }
+});
+
+btnSortTicket.addEventListener("click", (e) => {
+  if (isSorted) {
+    sortAttributeTicket();
+    isSorted = false;
+  } else {
+    sortAttributeTicketReverse();
+    isSorted = true;
+  }
+});
+
+btnSortFare.addEventListener("click", (e) => {
+  if (isSorted) {
+    sortAttributeFare();
+    isSorted = false;
+  } else {
+    sortAttributeFareReverse();
+    isSorted = true;
+  }
 });
 
 //Получаем ключи из первого объекта в массиве и добавляем их в таблицу
@@ -79,7 +161,28 @@ function valueList(el) {
         if (key == checkListArray[jey]) {
           const td = document.createElement("td");
           td.innerHTML = item[key];
-          tr.setAttribute("loading", "lazy");
+          //добавляем атрибут, равный значению элемента для последующей сортировки
+          if (key == "age") {
+            tr.setAttribute("data-age", item[key]);
+          }
+          if (key == "id") {
+            tr.setAttribute("data-Id", item[key]);
+          }
+          if (key == "class") {
+            tr.setAttribute("data-class", item[key]);
+          }
+          if (key == "sibsp") {
+            tr.setAttribute("data-sibsp", item[key]);
+          }
+          if (key == "parch") {
+            tr.setAttribute("data-parch", item[key]);
+          }
+          if (key == "ticket") {
+            tr.setAttribute("data-ticket", item[key]);
+          }
+          if (key == "fare") {
+            tr.setAttribute("data-fare", item[key]);
+          }
           tr.append(td);
         }
       }
@@ -96,6 +199,7 @@ function lazyLoad() {
   elementsCount.push(alltr);
 }
 
+//из списка массивов выбираем первый объект и с помощью его ключей создаем чекбоксы на странице
 function CheckBox(el) {
   const navList = document.createElement("div");
   navList.classList = "nav-list";
@@ -140,4 +244,365 @@ function filterSearch() {
       table.rows[i].style.display = "none";
     }
   }
+}
+//Функция, которая проверяет, есть ли в выбранных чекбоксах значения, которые можно было бы отсортировать и, если да, то появляются соответствующие кнопки
+function checkSort(array) {
+  for (let key in array) {
+    if (array[key] == "id") {
+      btnSortId.style.display = "block";
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "age") {
+      btnSortAge.style.display = "block";
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "sibsp") {
+      btnSortSibsp.style.display = "block";
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "parch") {
+      btnSortParch.style.display = "block";
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "ticket") {
+      btnSortTicket.style.display = "block";
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "class") {
+      btnSortClass.style.display = "block";
+      isSorted = true;
+    }
+  }
+}
+
+function sortAttributeAge() {
+  const collection = document.querySelectorAll("[data-age]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return a.getAttribute("data-age") - b.getAttribute("data-age");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeId() {
+  const collection = document.querySelectorAll("[data-Id]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return a.getAttribute("data-Id") - b.getAttribute("data-Id");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeClass() {
+  const collection = document.querySelectorAll("[data-class]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return a.getAttribute("data-class") - b.getAttribute("data-class");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeSibsp() {
+  const collection = document.querySelectorAll("[data-sibsp]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return a.getAttribute("data-sibsp") - b.getAttribute("data-sibsp");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeParch() {
+  const collection = document.querySelectorAll("[data-parch]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return a.getAttribute("data-parch") - b.getAttribute("data-parch");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeTicket() {
+  const collection = document.querySelectorAll("[data-ticket]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return a.getAttribute("data-ticket") - b.getAttribute("data-ticket");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeFare() {
+  const collection = document.querySelectorAll("[data-fare]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return a.getAttribute("data-fare") - b.getAttribute("data-fare");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeAgeReverse() {
+  const collection = document.querySelectorAll("[data-age]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return b.getAttribute("data-age") - a.getAttribute("data-age");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeIdReverse() {
+  const collection = document.querySelectorAll("[data-Id]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return b.getAttribute("data-Id") - a.getAttribute("data-Id");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeClassReverse() {
+  const collection = document.querySelectorAll("[data-class]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return b.getAttribute("data-class") - a.getAttribute("data-class");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeSibspReverse() {
+  const collection = document.querySelectorAll("[data-sibsp]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return b.getAttribute("data-sibsp") - a.getAttribute("data-sibsp");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeParchReverse() {
+  const collection = document.querySelectorAll("[data-parch]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return b.getAttribute("data-parch") - a.getAttribute("data-parch");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeTicketReverse() {
+  const collection = document.querySelectorAll("[data-ticket]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return b.getAttribute("data-ticket") - a.getAttribute("data-ticket");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
+}
+
+function sortAttributeFareReverse() {
+  const collection = document.querySelectorAll("[data-fare]");
+  const tbody = document.querySelector("tbody");
+  const tbodytr = document.querySelectorAll("tbody tr");
+  tbodytr.forEach((item, index, array) => {
+    item.remove();
+  });
+
+  let newColl = [];
+
+  for (var i = collection.length - 1; i >= 0; i--) {
+    newColl.push(collection[i]);
+  }
+
+  newColl.sort(function (a, b) {
+    return b.getAttribute("data-fare") - a.getAttribute("data-fare");
+  });
+
+  newColl.forEach((item, index, array) => {
+    tbody.append(item);
+  });
 }
