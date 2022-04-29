@@ -1,0 +1,164 @@
+/*обнуление*/
+* {
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+*,
+*:before,
+*:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+:focus,
+:active {
+  outline: none;
+}
+a:focus,
+a:active {
+  outline: none;
+}
+nav,
+footer,
+header,
+aside {
+  display: block;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+  font-size: 100%;
+  line-height: 1;
+  font-size: 14px;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+input,
+button,
+textarea {
+  font-family: inherit;
+}
+input::-ms-clear {
+  display: none;
+}
+button {
+  cursor: pointer;
+}
+button::-moz-focus-inner {
+  padding: 0;
+  border: 0;
+}
+a,
+a:visited {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+ul li {
+  list-style: none;
+}
+img {
+  vertical-align: top;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+/*--------------------*/
+body {
+  background-color: #ccc;
+}
+/* Оболочка */
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+.container {
+  width: 1100px;
+  margin: 0 auto;
+}
+
+.body {
+  margin-top: 100px;
+  border-radius: 10px 10px 0 0;
+  background-color: white;
+  padding: 20px 0px;
+  box-shadow: 0px -4px 49px 8px rgba(34, 60, 80, 0.4);
+}
+
+.btn {
+  background-color: white;
+  color: #191919;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: 900;
+  padding: 10px 0px;
+  width: 150px;
+  border-radius: 15px;
+}
+
+/* Чекбоксы */
+.nav {
+  display: flex;
+  justify-content: space-around;
+}
+
+/* Таблица */
+.table-menu {
+  padding: 20px 20px;
+  border-radius: 9px;
+  display: flex;
+  justify-content: center;
+  margin: 0 20px;
+  background-color: #ccc;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+  position: relative;
+}
+.table thead {
+  position: sticky;
+  top: 0px;
+}
+.table th {
+  font-weight: bold;
+  padding: 5px;
+  background: #efefef;
+
+  border: 1px solid #dddddd;
+}
+.table td {
+  border: 1px solid #dddddd;
+  padding: 5px;
+}
+.table tr td:first-child,
+.table tr th:first-child {
+  border-left: none;
+}
+.table tr td:last-child,
+.table tr th:last-child {
+  border-right: none;
+}
+
+.nav {
+  margin-bottom: 20px;
+}
+
+.nav-list {
+  display: grid;
+  row-gap: 10px;
+  grid-template: repeat(3, 1fr) / repeat(5, 200px);
+}
