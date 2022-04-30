@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=1400, initial-scale=1.0">
-      <link rel="stylesheet" href="./Style/Style.css">
-      <title>Document</title>
-   </head>
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=1400, initial-scale=1.0">
+   <link rel="stylesheet" href="./Style/Style.css">
+   <link rel="stylesheet" href="./Style/btnstyle.css">
+   <title>Document</title>
+</head>
 
-   <body>
-      <div class="wrapper">
-         <div class="container">
+<body>
+   <div class="wrapper">
+      <div class="container">
 
-            <section class="body">
-               <nav class="nav">
+         <section class="body">
+            <nav class="nav">
 
-               </nav>
-               <div class="button-add">
-                  <button class="btn btn-add">
-                     <span>add passenger</span>
-                     <span>clear</span>
-                  </button>
-                  <label for="filter">
-                     <input id="search-text" type="text" onkeyup="filterSearch()" name="filter"
-                        placeholder="enter filter">
-                  </label>
+            </nav>
+            <div class="button-add">
+               <button class=" btn-add  btn-three">
+                  <span>add passenger</span>
+                  <span>clear</span>
+               </button>
+               <label for="filter">
+                  <input id="search-text" type="text" onkeyup="filterSearch()" name="filter" placeholder="enter filter">
+               </label>
+            </div>
+            <div class="button-sort">
+               <button class=" btn-sort-id">
+                  sort id
+               </button>
+               <button class=" btn-sort-class">
+                  sort class
+               </button>
+               <button class=" btn-sort-age">
+                  age
+               </button>
+               <button class=" btn-sort-sibsp">
+                  sort sibsp
+               </button>
+               <button class=" btn-sort-parch">
+                  sort parch
+               </button>
+               <button class=" btn-sort-ticket">
+                  sort ticket
+               </button>
+               <button class=" btn-sort-fare">
+                  sort fare
+               </button>
+            </div>
+
+            <div class="table-menu">
+               <div class="body-table">
+                  <table class="table" id="info-table">
+                     <thead class="thead"></thead>
+                     <tbody class="tbody"></tbody>
+                  </table>
                </div>
-               <div class="button-sort">
-                  <button class=" btn-sort-id">
-                     sort id
-                  </button>
-                  <button class=" btn-sort-class">
-                     sort class
-                  </button>
-                  <button class=" btn-sort-age">
-                     age
-                  </button>
-                  <button class=" btn-sort-sibsp">
-                     sort sibsp
-                  </button>
-                  <button class=" btn-sort-parch">
-                     sort parch
-                  </button>
-                  <button class=" btn-sort-ticket">
-                     sort ticket
-                  </button>
-                  <button class=" btn-sort-fare">
-                     sort fare
-                  </button>
-               </div>
+            </div>
+         </section>
 
-               <div class="table-menu">
-                  <div class="body-table">
-                     <table class="table" id="info-table">
-                        <thead class="thead"></thead>
-                        <tbody class="tbody"></tbody>
-                     </table>
-                  </div>
-               </div>
-            </section>
-
-         </div>
       </div>
-      <script src="./JavaScript/JavaSctipt.js"></script>
-   </body>
+   </div>
+   <script src="./JavaScript/JavaSctipt.js"></script>
+</body>
 
 </html>

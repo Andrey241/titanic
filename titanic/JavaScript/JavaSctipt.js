@@ -50,7 +50,9 @@ getPassenger((titanicList) => {
 //Вешаем событие на кнопку добавить пассажиров
 btnAdd.addEventListener("click", (e) => {
   getPassenger((titanicList) => {
-    if (checkClick === true) {
+    const checkList = document.querySelectorAll(".nav input:checked");
+
+    if (checkList.length > 0 && checkClick === true) {
       checkListFunction();
       valueList(titanicList);
       tableMenu.style.backgroundColor = "white";
@@ -60,8 +62,10 @@ btnAdd.addEventListener("click", (e) => {
       collectionLengthFunction();
       addButtonToHead();
       console.log(1);
+      btnAdd.classList.toggle("_active");
       return;
     } else if (checkClick === false) {
+      btnAdd.classList.remove("_active");
       clearElements();
       return;
     }
@@ -176,8 +180,9 @@ function valueList(el) {
         if (key == checkListArray[jey]) {
           const td = document.createElement("td");
           td.innerHTML = item[key];
+          checkClick = true;
           if (item[key] == null) {
-            td.style.backgroundColor = "red";
+            td.style.backgroundColor = "white";
           }
           if (key == "age") {
             //добавляем атрибут, равный значению элемента для последующей сортировки
@@ -223,7 +228,9 @@ function CheckBox(el) {
   navList.classList = "nav-list";
   for (let key in el[0]) {
     const label = document.createElement("label");
-    label.innerHTML = key;
+    label.innerHTML = `<div class="checkbox__text">${key}</div>`;
+    label.style.fontSize = "20px";
+    label.classList.add("checkbox");
     const input = document.createElement("input");
     input.setAttribute("data-check", key);
     input.type = "checkbox";
@@ -264,45 +271,7 @@ function filterSearch() {
     }
   }
 }
-//Функция, которая проверяет, есть ли в выбранных чекбоксах значения, которые можно было бы отсортировать и, если да, то появляются соответствующие кнопки
-// function checkSort(array) {
-//   for (let key in array) {
-//     if (array[key] == "id") {
-//       btnSortId.style.display = "block";
-//       isSorted = true;
-//     }
-//   }
-//   for (let key in array) {
-//     if (array[key] == "age") {
-//       btnSortAge.style.display = "block";
-//       isSorted = true;
-//     }
-//   }
-//   for (let key in array) {
-//     if (array[key] == "sibsp") {
-//       btnSortSibsp.style.display = "block";
-//       isSorted = true;
-//     }
-//   }
-//   for (let key in array) {
-//     if (array[key] == "parch") {
-//       btnSortParch.style.display = "block";
-//       isSorted = true;
-//     }
-//   }
-//   for (let key in array) {
-//     if (array[key] == "ticket") {
-//       btnSortTicket.style.display = "block";
-//       isSorted = true;
-//     }
-//   }
-//   for (let key in array) {
-//     if (array[key] == "class") {
-//       btnSortClass.style.display = "block";
-//       isSorted = true;
-//     }
-//   }
-// }
+
 //Чистит результаты поиска и фильтры
 function clearElements() {
   const allCreateTr = document.querySelectorAll("tr");
