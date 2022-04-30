@@ -25,6 +25,9 @@ const input = document.querySelector("input");
 let checkClick = true;
 let isSorted = true;
 
+//Длина коллекции
+let collectionLength = 0;
+
 //Получаем данные с JSON
 function getPassenger(cb) {
   const xhr = new XMLHttpRequest();
@@ -53,14 +56,42 @@ btnAdd.addEventListener("click", (e) => {
       lazyLoad();
       checkClick = false;
       checkSort(checkListArray);
+      collectionLengthFunction();
+      addButtonToHead();
+      console.log(1);
       return;
     } else if (checkClick === false) {
       clearElements();
-
       return;
     }
   });
 });
+
+function addButtonToHead() {
+  const dataHead = document.querySelectorAll("[data-head]");
+  dataHead.forEach((item, indexnarray) => {
+    if (item.innerHTML == "age") {
+      item.innerHTML = "";
+    }
+    item.append(btnSortAge);
+    // else if (item.innerHTML == "id") {
+    //   item.innerHTML = "";
+    //   item.append(btnSortId);
+    // } else if (item.innerHTML == "class") {
+    //   item.innerHTML = "";
+    //   item.append(btnSortClass);
+    // } else if (item.innerHTML == "sibsp") {
+    //   item.innerHTML = "";
+    //   item.append(btnSortSibsp);
+    // } else if (item.innerHTML == "ticket") {
+    //   item.innerHTML = "";
+    //   item.append(btnSortTicket);
+    // } else if (item.innerHTML == "fare") {
+    //   item.innerHTML = "";
+    //   item.append(btnSortFare);
+    // }
+  });
+}
 
 //Вешаем событие на кнопку сортировки пользователей
 btnSortAge.addEventListener("click", (e) => {
@@ -138,8 +169,9 @@ function keyList(el) {
   const tr = document.createElement("tr");
   for (let key of el) {
     const th = document.createElement("th");
-    th.innerHTML = key;
+    th.innerHTML = `btnsort${key}`;
     tr.append(th);
+    th.setAttribute([`data-head`], key);
   }
   thead.append(tr);
   // btnAdd.remove();
@@ -224,7 +256,7 @@ function checkListFunction() {
 }
 
 //Поиск значений из фильтра. Вызов производится из HTML
-var phrase = document.getElementById("search-text");
+const phrase = document.getElementById("search-text");
 function filterSearch() {
   var table = document.getElementById("info-table");
   var regPhrase = new RegExp(phrase.value, "i");
@@ -617,4 +649,10 @@ function sortAttributeFareReverse() {
   newColl.forEach((item, index, array) => {
     tbody.append(item);
   });
+}
+
+//Количество строк в таблице
+function collectionLengthFunction() {
+  const alltr = document.querySelectorAll("tbody tr");
+  collectionLength = alltr.length;
 }
