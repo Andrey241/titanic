@@ -13,6 +13,7 @@ const btnSortFare = document.querySelector(".btn-sort-fare");
 const tableMenu = document.querySelector(".table-menu");
 const thead = document.querySelector(".thead");
 const tbody = document.querySelector(".tbody");
+const buttonsSort = document.querySelector(".button-sort");
 
 //чекбоксы
 const nav = document.querySelector(".nav");
@@ -305,14 +306,16 @@ function filterSearch() {
 //Чистит результаты поиска и фильтры
 function clearElements() {
   const allCreateTr = document.querySelectorAll("tr");
-  const btnSort = document.querySelectorAll(".button-sort button");
+  const btnSort = document.querySelectorAll("[data-button-head]");
+  btnSort.forEach((item, index, array) => {
+    item.style.display = "none";
+    buttonsSort.append(item);
+  });
   allCreateTr.forEach((item, index, array) => {
     tbody.innerHTML = "";
     item.remove();
   });
-  btnSort.forEach((item, index, array) => {
-    item.style.display = "none";
-  });
+
   checkListArray = [];
   checkClick = true;
   input.value = "";

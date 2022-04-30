@@ -121,9 +121,12 @@ body {
 .table tbody {
   background-color: rgba(204, 204, 204, 0.164);
 }
-.table thead {
+.table thead tr {
   position: sticky;
   top: 0px;
+  background-color: #009879;
+  color: #ffffff;
+  text-align: left;
 }
 .table th {
   font-weight: bold;
@@ -193,4 +196,14 @@ body {
 
 .button input:focus {
   background-color: rgb(212, 211, 211);
+}
+
+[data-button-head] {
+  font-size: 15px;
+  font-weight: 900;
+  background-color: #ffffff;
+  padding: 0 7px;
+  border-radius: 3px;
+  width: 100%;
+  height: 100%;
 }
