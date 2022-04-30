@@ -67,29 +67,17 @@ btnAdd.addEventListener("click", (e) => {
   });
 });
 
+//добавялем кнопки сортировки в табилцу
 function addButtonToHead() {
-  const dataHead = document.querySelectorAll("[data-head]");
-  dataHead.forEach((item, indexnarray) => {
-    if (item.innerHTML == "age") {
-      item.innerHTML = "";
-    }
-    item.append(btnSortAge);
-    // else if (item.innerHTML == "id") {
-    //   item.innerHTML = "";
-    //   item.append(btnSortId);
-    // } else if (item.innerHTML == "class") {
-    //   item.innerHTML = "";
-    //   item.append(btnSortClass);
-    // } else if (item.innerHTML == "sibsp") {
-    //   item.innerHTML = "";
-    //   item.append(btnSortSibsp);
-    // } else if (item.innerHTML == "ticket") {
-    //   item.innerHTML = "";
-    //   item.append(btnSortTicket);
-    // } else if (item.innerHTML == "fare") {
-    //   item.innerHTML = "";
-    //   item.append(btnSortFare);
-    // }
+  const dataHeadTh = document.querySelectorAll("[data-head]");
+  const dataHeadButton = document.querySelectorAll("[data-button-head]");
+  dataHeadTh.forEach((item, index, array) => {
+    dataHeadButton.forEach((itemButton, index, array) => {
+      if (item.dataset.head == itemButton.dataset.buttonHead) {
+        item.innerHTML = "";
+        item.append(itemButton);
+      }
+    });
   });
 }
 
@@ -169,7 +157,7 @@ function keyList(el) {
   const tr = document.createElement("tr");
   for (let key of el) {
     const th = document.createElement("th");
-    th.innerHTML = `btnsort${key}`;
+    th.innerHTML = `${key}`;
     tr.append(th);
     th.setAttribute([`data-head`], key);
   }
@@ -256,8 +244,9 @@ function checkListFunction() {
 }
 
 //Поиск значений из фильтра. Вызов производится из HTML
-const phrase = document.getElementById("search-text");
+
 function filterSearch() {
+  const phrase = document.getElementById("search-text");
   var table = document.getElementById("info-table");
   var regPhrase = new RegExp(phrase.value, "i");
   var flag = false;
@@ -275,44 +264,44 @@ function filterSearch() {
   }
 }
 //Функция, которая проверяет, есть ли в выбранных чекбоксах значения, которые можно было бы отсортировать и, если да, то появляются соответствующие кнопки
-function checkSort(array) {
-  for (let key in array) {
-    if (array[key] == "id") {
-      btnSortId.style.display = "block";
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "age") {
-      btnSortAge.style.display = "block";
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "sibsp") {
-      btnSortSibsp.style.display = "block";
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "parch") {
-      btnSortParch.style.display = "block";
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "ticket") {
-      btnSortTicket.style.display = "block";
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "class") {
-      btnSortClass.style.display = "block";
-      isSorted = true;
-    }
-  }
-}
+// function checkSort(array) {
+//   for (let key in array) {
+//     if (array[key] == "id") {
+//       btnSortId.style.display = "block";
+//       isSorted = true;
+//     }
+//   }
+//   for (let key in array) {
+//     if (array[key] == "age") {
+//       btnSortAge.style.display = "block";
+//       isSorted = true;
+//     }
+//   }
+//   for (let key in array) {
+//     if (array[key] == "sibsp") {
+//       btnSortSibsp.style.display = "block";
+//       isSorted = true;
+//     }
+//   }
+//   for (let key in array) {
+//     if (array[key] == "parch") {
+//       btnSortParch.style.display = "block";
+//       isSorted = true;
+//     }
+//   }
+//   for (let key in array) {
+//     if (array[key] == "ticket") {
+//       btnSortTicket.style.display = "block";
+//       isSorted = true;
+//     }
+//   }
+//   for (let key in array) {
+//     if (array[key] == "class") {
+//       btnSortClass.style.display = "block";
+//       isSorted = true;
+//     }
+//   }
+// }
 //Чистит результаты поиска и фильтры
 function clearElements() {
   const allCreateTr = document.querySelectorAll("tr");
@@ -655,4 +644,49 @@ function sortAttributeFareReverse() {
 function collectionLengthFunction() {
   const alltr = document.querySelectorAll("tbody tr");
   collectionLength = alltr.length;
+}
+
+function checkSort(array) {
+  for (let key in array) {
+    if (array[key] == "id") {
+      btnSortId.style.display = "block";
+      btnSortId.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "age") {
+      btnSortAge.style.display = "block";
+      btnSortAge.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "sibsp") {
+      btnSortSibsp.style.display = "block";
+      btnSortSibsp.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "parch") {
+      btnSortParch.style.display = "block";
+      btnSortParch.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "ticket") {
+      btnSortTicket.style.display = "block";
+      btnSortTicket.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "class") {
+      btnSortClass.style.display = "block";
+      btnSortClass.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
 }
