@@ -662,3 +662,7 @@ function checkSort(array) {
     }
   }
 }
+
+window.addEventListener("scroll", () => {
+  console.log(scrollY);
+});
