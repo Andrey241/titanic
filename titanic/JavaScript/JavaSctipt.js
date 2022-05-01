@@ -162,7 +162,7 @@ function keyList(el) {
   const tr = document.createElement("tr");
   for (let key of el) {
     const th = document.createElement("th");
-    th.innerHTML = `${key}`;
+    th.innerHTML = key;
     tr.append(th);
     th.setAttribute([`data-head`], key);
   }
@@ -228,7 +228,9 @@ function CheckBox(el) {
   navList.classList = "nav-list";
   for (let key in el[0]) {
     const label = document.createElement("label");
-    label.innerHTML = `<div class="checkbox__text">${key}</div>`;
+    label.innerHTML = `<div class="checkbox__text">${
+      key.slice(0, 1).toUpperCase() + key.slice(1, key.length)
+    }</div>`;
     label.style.fontSize = "20px";
     label.classList.add("checkbox");
     const input = document.createElement("input");
