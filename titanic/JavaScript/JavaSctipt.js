@@ -1,6 +1,6 @@
-//кнопка - обработчик события
+// кнопка - обработчик события
 const btnAdd = document.querySelector(".btn-add");
-//кнопка сортировки возраста
+// кнопка сортировки возраста
 const btnSortId = document.querySelector(".btn-sort-id");
 const btnSortClass = document.querySelector(".btn-sort-class");
 const btnSortAge = document.querySelector(".btn-sort-age");
@@ -9,28 +9,25 @@ const btnSortParch = document.querySelector(".btn-sort-parch");
 const btnSortTicket = document.querySelector(".btn-sort-ticket");
 const btnSortFare = document.querySelector(".btn-sort-fare");
 
-//элементы таблицы
+// элементы таблицы
 const body = document.querySelector(".body");
 const tableMenu = document.querySelector(".table-menu");
 const thead = document.querySelector(".thead");
 const tbody = document.querySelector(".tbody");
 const buttonsSort = document.querySelector(".button-sort");
 
-//чекбоксы
+// чекбоксы
 const nav = document.querySelector(".nav");
-//Массив, куда будут записаны выбранные чекбоксы
+// Массив, куда будут записаны выбранные чекбоксы
 let checkListArray = [];
-//фильтр введеных значений
+// фильтр введеных значений
 const input = document.querySelector("input");
 
-//обработчик события нажатия кнопки
+// обработчик события нажатия кнопки
 let checkClick = true;
 let isSorted = true;
 
-//Длина коллекции
-let collectionLength = 0;
-
-//Получаем данные с JSON
+// Получаем данные с JSON
 function getPassenger(cb) {
   const xhr = new XMLHttpRequest();
   xhr.open(
@@ -43,12 +40,12 @@ function getPassenger(cb) {
   });
   xhr.send();
 }
-//Вызываем функцию, которая сообщает какие ключи есть в объекте и вызываем функцию, которая все эти ключи отобразит в виде чек-боксов на странице
+// Вызываем функцию, которая сообщает какие ключи есть в объекте и вызываем функцию, которая все эти ключи отобразит в виде чек-боксов на странице
 getPassenger((titanicList) => {
   CheckBox(titanicList);
 });
 
-//Вешаем событие на кнопку добавить пассажиров
+// Вешаем событие на кнопку добавить пассажиров
 btnAdd.addEventListener("click", (e) => {
   getPassenger((titanicList) => {
     const checkList = document.querySelectorAll(".nav input:checked");
@@ -73,7 +70,7 @@ btnAdd.addEventListener("click", (e) => {
   });
 });
 
-//добавялем кнопки сортировки в табилцу
+// добавялем кнопки сортировки в табилцу
 function addButtonToHead() {
   const dataHeadTh = document.querySelectorAll("[data-head]");
   const dataHeadButton = document.querySelectorAll("[data-button-head]");
@@ -87,8 +84,17 @@ function addButtonToHead() {
   });
 }
 
-//Вешаем событие на кнопку сортировки пользователей
+// Вешаем событие на кнопку сортировки пользователей
+
+function showAllLine() {
+  const ptext = document.querySelectorAll("tbody tr");
+  ptext.forEach((item) => {
+    item.classList.remove("displayNone");
+  });
+}
+
 btnSortAge.addEventListener("click", (e) => {
+  showAllLine();
   if (isSorted) {
     sortAttributeAge();
     isSorted = false;
@@ -99,6 +105,7 @@ btnSortAge.addEventListener("click", (e) => {
 });
 
 btnSortId.addEventListener("click", (e) => {
+  showAllLine();
   if (isSorted) {
     sortAttributeId();
     isSorted = false;
@@ -109,6 +116,7 @@ btnSortId.addEventListener("click", (e) => {
 });
 
 btnSortClass.addEventListener("click", (e) => {
+  showAllLine();
   if (isSorted) {
     sortAttributeClass();
     isSorted = false;
@@ -119,6 +127,7 @@ btnSortClass.addEventListener("click", (e) => {
 });
 
 btnSortSibsp.addEventListener("click", (e) => {
+  showAllLine();
   if (isSorted) {
     sortAttributeSibsp();
     isSorted = false;
@@ -129,6 +138,7 @@ btnSortSibsp.addEventListener("click", (e) => {
 });
 
 btnSortParch.addEventListener("click", (e) => {
+  showAllLine();
   if (isSorted) {
     sortAttributeParch();
     isSorted = false;
@@ -139,6 +149,7 @@ btnSortParch.addEventListener("click", (e) => {
 });
 
 btnSortTicket.addEventListener("click", (e) => {
+  showAllLine();
   if (isSorted) {
     sortAttributeTicket();
     isSorted = false;
@@ -149,6 +160,7 @@ btnSortTicket.addEventListener("click", (e) => {
 });
 
 btnSortFare.addEventListener("click", (e) => {
+  showAllLine();
   if (isSorted) {
     sortAttributeFare();
     isSorted = false;
@@ -176,6 +188,7 @@ function keyList(el) {
 function valueList(el) {
   el.map(function (item, index, array) {
     const tr = document.createElement("tr");
+
     for (let key in item) {
       for (let jey in checkListArray) {
         if (key == checkListArray[jey]) {
@@ -210,6 +223,7 @@ function valueList(el) {
           tr.append(td);
         }
       }
+      tableMenu.style.marginBottom = "300px";
     }
 
     tbody.append(tr);
@@ -252,6 +266,11 @@ function checkListFunction() {
 //Поиск значений из фильтра. Вызов производится из HTML
 
 function filterSearch() {
+  const ptext = document.querySelectorAll("tbody tr");
+  ptext.forEach((item) => {
+    item.classList.remove("displayNone");
+  });
+
   const phrase = document.getElementById("search-text");
   var table = document.getElementById("info-table");
   var regPhrase = new RegExp(phrase.value, "i");
@@ -286,6 +305,7 @@ function clearElements() {
   checkListArray = [];
   checkClick = true;
   input.value = "";
+  tableMenu.style.marginBottom = "20px";
 }
 //Функции сортировки
 function sortAttributeAge() {
@@ -615,7 +635,6 @@ function collectionLengthFunction() {
   const alltr = document.querySelectorAll("tbody tr");
   collectionLength = alltr.length;
 }
-
 function checkSort(array) {
   for (let key in array) {
     if (array[key] == "id") {
@@ -660,15 +679,17 @@ function checkSort(array) {
     }
   }
 }
-//Подгрузка строк
+
+// Подгрузка строк
 function loadMore() {
   const pText = document.querySelectorAll("tbody tr");
   if (pText.length > 0) {
     pText.forEach((item, index, array) => {
       item.setAttribute(
         "data-coordinates",
-        Math.floor(item.getBoundingClientRect().top)
+        Math.floor(item.getBoundingClientRect().bottom + scrollY)
       );
+      item.setAttribute("data-height", Math.floor(item.offsetHeight));
     });
   }
   pText.forEach((item) => {
@@ -676,22 +697,20 @@ function loadMore() {
   });
   for (let i = 0; i < 30; i++) {
     pText[i].classList.remove("displayNone");
-    console.log(pText[i].dataset);
   }
-  const win2 = document.querySelector.clientHeigth;
 }
+const windowsHeigth = document.documentElement.clientHeight - 100;
 
 window.addEventListener("scroll", lazyScroll);
-function lazyScroll(evt) {
+function lazyScroll() {
   const pText = document.querySelectorAll("tbody tr");
-  let i = Math.floor(scrollY + scrollY);
-  console.log(pText[30].dataset.coordinates);
-  pText.forEach((item) => {
-    if (Math.floor(i) >= item.dataset.coordinates) {
-      console.info(item.dataset.coordinates);
-      console.log(i);
+
+  pText.forEach((item, index, array) => {
+    if (
+      pageYOffset >=
+      item.dataset.coordinates - windowsHeigth - item.dataset.height
+    ) {
       item.classList.remove("displayNone");
-      //item.style.display = "block";
     }
   });
 }

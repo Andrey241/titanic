@@ -118,7 +118,6 @@ body {
 .table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 500px;
   border-collapse: collapse;
   position: relative;
   margin-top: 20px;
@@ -211,8 +210,10 @@ body {
   text-transform: uppercase;
   font-weight: 900;
   margin: 10px 0px 10px 10px;
-  padding: 5px 10px;
+  font-size: 20px;
+  padding: 0px 24px;
   background-color: transparent;
+  font-family: "Bebas Neue", cursive;
 }
 
 .btn-three {
@@ -292,7 +293,7 @@ body {
 }
 .button-add label input::placeholder {
   color: gainsboro;
-  padding-left: 30px;
+  font-family: "Bebas Neue", cursive;
 }
 .button-add label input::placeholder:focus {
   color: #222128;
@@ -306,8 +307,8 @@ body {
   width: 12%;
   display: block;
   position: absolute;
-  top: 12%;
-  left: 1px;
+  top: 13%;
+  left: -44px;
   border-radius: 2px;
 }
 
