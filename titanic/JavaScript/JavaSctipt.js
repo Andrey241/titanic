@@ -10,6 +10,7 @@ const btnSortTicket = document.querySelector(".btn-sort-ticket");
 const btnSortFare = document.querySelector(".btn-sort-fare");
 
 //элементы таблицы
+const body = document.querySelector(".body");
 const tableMenu = document.querySelector(".table-menu");
 const thead = document.querySelector(".thead");
 const tbody = document.querySelector(".tbody");
@@ -56,13 +57,13 @@ btnAdd.addEventListener("click", (e) => {
       checkListFunction();
       valueList(titanicList);
       tableMenu.style.backgroundColor = "white";
-      lazyLoad();
       checkClick = false;
       checkSort(checkListArray);
       collectionLengthFunction();
       addButtonToHead();
       console.log(1);
       btnAdd.classList.toggle("_active");
+      loadMore();
       return;
     } else if (checkClick === false) {
       btnAdd.classList.remove("_active");
@@ -216,11 +217,6 @@ function valueList(el) {
 }
 
 // Ленивая загрузка
-function lazyLoad() {
-  let elementsCount = [];
-  const alltr = document.querySelectorAll("tr");
-  elementsCount.push(alltr);
-}
 
 //из списка массивов выбираем первый объект и с помощью его ключей создаем чекбоксы на странице
 function CheckBox(el) {
@@ -664,7 +660,38 @@ function checkSort(array) {
     }
   }
 }
+//Подгрузка строк
+function loadMore() {
+  const pText = document.querySelectorAll("tbody tr");
+  if (pText.length > 0) {
+    pText.forEach((item, index, array) => {
+      item.setAttribute(
+        "data-coordinates",
+        Math.floor(item.getBoundingClientRect().top)
+      );
+    });
+  }
+  pText.forEach((item) => {
+    item.classList.add("displayNone");
+  });
+  for (let i = 0; i < 30; i++) {
+    pText[i].classList.remove("displayNone");
+    console.log(pText[i].dataset);
+  }
+  const win2 = document.querySelector.clientHeigth;
+}
 
-window.addEventListener("scroll", () => {
-  console.log(scrollY);
-});
+window.addEventListener("scroll", lazyScroll);
+function lazyScroll(evt) {
+  const pText = document.querySelectorAll("tbody tr");
+  let i = Math.floor(scrollY + scrollY);
+  console.log(pText[30].dataset.coordinates);
+  pText.forEach((item) => {
+    if (Math.floor(i) >= item.dataset.coordinates) {
+      console.info(item.dataset.coordinates);
+      console.log(i);
+      item.classList.remove("displayNone");
+      //item.style.display = "block";
+    }
+  });
+}
