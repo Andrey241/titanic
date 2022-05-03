@@ -56,10 +56,9 @@ btnAdd.addEventListener("click", (e) => {
       tableMenu.style.backgroundColor = "white";
       checkClick = false;
       checkSort(checkListArray);
-      collectionLengthFunction();
       addButtonToHead();
-      console.log(1);
       btnAdd.classList.toggle("_active");
+
       loadMore();
       return;
     } else if (checkClick === false) {
@@ -88,87 +87,11 @@ function addButtonToHead() {
 
 function showAllLine() {
   const ptext = document.querySelectorAll("tbody tr");
+
   ptext.forEach((item) => {
     item.classList.remove("displayNone");
   });
 }
-
-btnSortAge.addEventListener("click", (e) => {
-  showAllLine();
-  if (isSorted) {
-    sortAttributeAge();
-    isSorted = false;
-  } else {
-    sortAttributeAgeReverse();
-    isSorted = true;
-  }
-});
-
-btnSortId.addEventListener("click", (e) => {
-  showAllLine();
-  if (isSorted) {
-    sortAttributeId();
-    isSorted = false;
-  } else {
-    sortAttributeIdReverse();
-    isSorted = true;
-  }
-});
-
-btnSortClass.addEventListener("click", (e) => {
-  showAllLine();
-  if (isSorted) {
-    sortAttributeClass();
-    isSorted = false;
-  } else {
-    sortAttributeClassReverse();
-    isSorted = true;
-  }
-});
-
-btnSortSibsp.addEventListener("click", (e) => {
-  showAllLine();
-  if (isSorted) {
-    sortAttributeSibsp();
-    isSorted = false;
-  } else {
-    sortAttributeSibspReverse();
-    isSorted = true;
-  }
-});
-
-btnSortParch.addEventListener("click", (e) => {
-  showAllLine();
-  if (isSorted) {
-    sortAttributeParch();
-    isSorted = false;
-  } else {
-    sortAttributeParchReverse();
-    isSorted = true;
-  }
-});
-
-btnSortTicket.addEventListener("click", (e) => {
-  showAllLine();
-  if (isSorted) {
-    sortAttributeTicket();
-    isSorted = false;
-  } else {
-    sortAttributeTicketReverse();
-    isSorted = true;
-  }
-});
-
-btnSortFare.addEventListener("click", (e) => {
-  showAllLine();
-  if (isSorted) {
-    sortAttributeFare();
-    isSorted = false;
-  } else {
-    sortAttributeFareReverse();
-    isSorted = true;
-  }
-});
 
 //Получаем ключи из первого объекта в массиве и добавляем их в таблицу
 function keyList(el) {
@@ -180,8 +103,6 @@ function keyList(el) {
     th.setAttribute([`data-head`], key);
   }
   thead.append(tr);
-  // btnAdd.remove();
-  // nav.remove();
 }
 
 // Получаем значения ключей и помещяем их в таблицу
@@ -198,26 +119,20 @@ function valueList(el) {
           if (item[key] == null) {
             td.style.backgroundColor = "white";
           }
+          //добавляем атрибут, равный значению элемента для последующей сортировки
           if (key == "age") {
-            //добавляем атрибут, равный значению элемента для последующей сортировки
             tr.setAttribute("data-age", item[key]);
-          }
-          if (key == "id") {
+          } else if (key == "id") {
             tr.setAttribute("data-Id", item[key]);
-          }
-          if (key == "class") {
+          } else if (key == "class") {
             tr.setAttribute("data-class", item[key]);
-          }
-          if (key == "sibsp") {
+          } else if (key == "sibsp") {
             tr.setAttribute("data-sibsp", item[key]);
-          }
-          if (key == "parch") {
+          } else if (key == "parch") {
             tr.setAttribute("data-parch", item[key]);
-          }
-          if (key == "ticket") {
+          } else if (key == "ticket") {
             tr.setAttribute("data-ticket", item[key]);
-          }
-          if (key == "fare") {
+          } else if (key == "fare") {
             tr.setAttribute("data-fare", item[key]);
           }
           tr.append(td);
@@ -258,8 +173,6 @@ function checkListFunction() {
   checkList.forEach((item, index, array) => {
     checkListArray.push(item.dataset.check);
   });
-  Object.values(checkListArray);
-
   keyList(checkListArray);
 }
 
@@ -292,10 +205,11 @@ function filterSearch() {
 //Чистит результаты поиска и фильтры
 function clearElements() {
   const allCreateTr = document.querySelectorAll("tr");
-  const btnSort = document.querySelectorAll("[data-button-head]");
+  const btnSort = document.querySelectorAll("thead [data-button-head]");
   btnSort.forEach((item, index, array) => {
-    item.style.display = "none";
-    buttonsSort.append(item);
+    buttonsSort.prepend(item);
+    item.classList.add("displayNone");
+    item.removeAttribute("data-button-head");
   });
   allCreateTr.forEach((item, index, array) => {
     tbody.innerHTML = "";
@@ -306,8 +220,184 @@ function clearElements() {
   checkClick = true;
   input.value = "";
   tableMenu.style.marginBottom = "20px";
+  const checkList = document.querySelectorAll(".nav input:checked");
+  checkList.forEach((item) => {
+    item.checked = false;
+  });
 }
 //Функции сортировки
+//
+
+//Количество строк в таблице
+function collectionLengthFunction() {
+  const alltr = document.querySelectorAll("[data-button-head]");
+  collectionLength = alltr.length;
+}
+function checkSort(array) {
+  for (let key in array) {
+    if (array[key] == "id") {
+      btnSortId.classList.remove("displayNone");
+      btnSortId.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "age") {
+      btnSortAge.classList.remove("displayNone");
+      btnSortAge.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "sibsp") {
+      btnSortSibsp.classList.remove("displayNone");
+      btnSortSibsp.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "parch") {
+      btnSortParch.classList.remove("displayNone");
+      btnSortParch.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "ticket") {
+      btnSortTicket.classList.remove("displayNone");
+      btnSortTicket.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "class") {
+      btnSortClass.classList.remove("displayNone");
+      btnSortClass.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  for (let key in array) {
+    if (array[key] == "fare") {
+      btnSortClass.classList.remove("displayNone");
+      btnSortClass.setAttribute("data-button-head", array[key]);
+      isSorted = true;
+    }
+  }
+  return;
+}
+
+// Подгрузка строк
+function loadMore() {
+  const pText = document.querySelectorAll("tbody tr");
+  if (pText.length > 0) {
+    pText.forEach((item, index, array) => {
+      item.setAttribute(
+        "data-coordinates",
+        Math.floor(item.getBoundingClientRect().bottom + scrollY)
+      );
+      item.setAttribute("data-height", Math.floor(item.offsetHeight));
+    });
+  }
+  pText.forEach((item) => {
+    item.classList.add("displayNone");
+  });
+  for (let i = 0; i < 30; i++) {
+    pText[i].classList.remove("displayNone");
+  }
+}
+const windowsHeigth = document.documentElement.clientHeight - 100;
+
+window.addEventListener("scroll", lazyScroll);
+function lazyScroll() {
+  const pText = document.querySelectorAll("tbody tr");
+
+  pText.forEach((item, index, array) => {
+    if (
+      scrollY >=
+      item.dataset.coordinates - windowsHeigth - item.dataset.height
+    ) {
+      item.classList.remove("displayNone");
+    }
+  });
+}
+
+btnSortAge.addEventListener("click", (e) => {
+  showAllLine();
+  if (isSorted) {
+    sortAttributeAge();
+    isSorted = false;
+  } else {
+    sortAttributeAgeReverse();
+    isSorted = true;
+  }
+});
+
+btnSortId.addEventListener("click", (e) => {
+  showAllLine();
+  if (isSorted) {
+    sortAttributeId();
+    isSorted = false;
+  } else {
+    sortAttributeIdReverse();
+    isSorted = true;
+  }
+});
+
+btnSortClass.addEventListener("click", () => {
+  showAllLine();
+  if (isSorted) {
+    sortAttributeClass();
+    isSorted = false;
+  } else {
+    sortAttributeClassReverse();
+    isSorted = true;
+  }
+});
+
+btnSortSibsp.addEventListener("click", () => {
+  showAllLine();
+  if (isSorted) {
+    sortAttributeSibsp();
+    isSorted = false;
+  } else {
+    sortAttributeSibspReverse();
+    isSorted = true;
+  }
+});
+
+btnSortParch.addEventListener("click", () => {
+  showAllLine();
+  if (isSorted) {
+    sortAttributeParch();
+    isSorted = false;
+  } else {
+    sortAttributeParchReverse();
+    isSorted = true;
+  }
+});
+
+btnSortTicket.addEventListener("click", () => {
+  showAllLine();
+  if (isSorted) {
+    sortAttributeTicket();
+    isSorted = false;
+  } else {
+    sortAttributeTicketReverse();
+    isSorted = true;
+  }
+});
+
+btnSortFare.addEventListener("click", () => {
+  showAllLine();
+  if (isSorted) {
+    sortAttributeFare();
+    isSorted = false;
+  } else {
+    sortAttributeFareReverse();
+    isSorted = true;
+  }
+});
+
 function sortAttributeAge() {
   const collection = document.querySelectorAll("[data-age]");
   const tbody = document.querySelector("tbody");
@@ -331,6 +421,7 @@ function sortAttributeAge() {
   });
 }
 
+// функции для сортировки
 function sortAttributeId() {
   const collection = document.querySelectorAll("[data-Id]");
   const tbody = document.querySelector("tbody");
@@ -630,87 +721,105 @@ function sortAttributeFareReverse() {
   });
 }
 
-//Количество строк в таблице
-function collectionLengthFunction() {
-  const alltr = document.querySelectorAll("tbody tr");
-  collectionLength = alltr.length;
-}
-function checkSort(array) {
-  for (let key in array) {
-    if (array[key] == "id") {
-      btnSortId.style.display = "block";
-      btnSortId.setAttribute("data-button-head", array[key]);
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "age") {
-      btnSortAge.style.display = "block";
-      btnSortAge.setAttribute("data-button-head", array[key]);
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "sibsp") {
-      btnSortSibsp.style.display = "block";
-      btnSortSibsp.setAttribute("data-button-head", array[key]);
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "parch") {
-      btnSortParch.style.display = "block";
-      btnSortParch.setAttribute("data-button-head", array[key]);
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "ticket") {
-      btnSortTicket.style.display = "block";
-      btnSortTicket.setAttribute("data-button-head", array[key]);
-      isSorted = true;
-    }
-  }
-  for (let key in array) {
-    if (array[key] == "class") {
-      btnSortClass.style.display = "block";
-      btnSortClass.setAttribute("data-button-head", array[key]);
-      isSorted = true;
-    }
-  }
-}
+// функции для сортировки
+// function callSort() {
+//   const btnSort = document.querySelectorAll("[data-button-head]");
+//   const collection = document.querySelectorAll("[data-sort]");
+//   let array = [];
+//   collection.forEach((item) => {
+//     array.push(item.dataset.sort);
+//   });
 
-// Подгрузка строк
-function loadMore() {
-  const pText = document.querySelectorAll("tbody tr");
-  if (pText.length > 0) {
-    pText.forEach((item, index, array) => {
-      item.setAttribute(
-        "data-coordinates",
-        Math.floor(item.getBoundingClientRect().bottom + scrollY)
-      );
-      item.setAttribute("data-height", Math.floor(item.offsetHeight));
-    });
-  }
-  pText.forEach((item) => {
-    item.classList.add("displayNone");
-  });
-  for (let i = 0; i < 30; i++) {
-    pText[i].classList.remove("displayNone");
-  }
-}
-const windowsHeigth = document.documentElement.clientHeight - 100;
+//   btnSort.forEach((btn) => {
+//     btn.addEventListener("click", (event) => {
+//       showAllLine();
 
-window.addEventListener("scroll", lazyScroll);
-function lazyScroll() {
-  const pText = document.querySelectorAll("tbody tr");
+//       if ("age" == event.target.dataset.buttonHead) {
+//         console.log(1);
+//         if (isSorted) {
+//           sortAttribute("data-age", false);
+//           isSorted = false;
+//         } else {
+//           sortAttribute("data-age", true);
+//           isSorted = true;
+//         }
+//       } else if ("id" == event.target.dataset.buttonHead) {
+//         if (isSorted) {
+//           sortAttribute("data-id", false);
+//           isSorted = false;
+//         } else {
+//           sortAttribute("data-id", true);
+//           isSorted = true;
+//         }
+//       } else if ("class" == event.target.dataset.buttonHead) {
+//         if (isSorted) {
+//           sortAttribute("data-class", false);
+//           isSorted = false;
+//         } else {
+//           sortAttribute("data-class", true);
+//           isSorted = true;
+//         }
+//       } else if ("sibsp" == event.target.dataset.buttonHead) {
+//         if (isSorted) {
+//           sortAttribute("data-sibsp", false);
+//           isSorted = false;
+//         } else {
+//           sortAttribute("data-sibsp", true);
+//           isSorted = true;
+//         }
+//       } else if ("ticket" == event.target.dataset.buttonHead) {
+//         if (isSorted) {
+//           sortAttribute("data-ticket", false);
+//           isSorted = false;
+//         } else {
+//           sortAttribute("data-ticket", true);
+//           isSorted = true;
+//         }
+//       } else if ("parch" == event.target.dataset.buttonHead) {
+//         if (isSorted) {
+//           sortAttribute("data-parch", false);
+//           isSorted = false;
+//         } else {
+//           sortAttribute("data-parch", true);
+//           isSorted = true;
+//         }
+//       } else if ("fare" == event.target.dataset.buttonHead) {
+//         if (isSorted) {
+//           sortAttribute("data-fare", false);
+//           isSorted = false;
+//         } else {
+//           sortAttribute("data-fare", true);
+//           isSorted = true;
+//         }
+//       }
+//     });
+//   });
+// }
+// function sortAttribute(element, isSorted) {
+//   const collection = document.querySelectorAll("tbody tr");
+//   const tbody = document.querySelector("tbody");
+//   const tbodytr = document.querySelectorAll("tbody tr");
+//   tbodytr.forEach((item, index, array) => {
+//     item.remove();
+//   });
 
-  pText.forEach((item, index, array) => {
-    if (
-      pageYOffset >=
-      item.dataset.coordinates - windowsHeigth - item.dataset.height
-    ) {
-      item.classList.remove("displayNone");
-    }
-  });
-}
+//   let newColl = [];
+
+//   for (var i = collection.length - 1; i >= 0; i--) {
+//     newColl.push(collection[i]);
+//   }
+
+//   if (isSorted) {
+//     newColl.sort(function (a, b) {
+//       return a.getAttribute(element) - b.getAttribute(element);
+//     });
+//   } else {
+//     newColl.sort(function (a, b) {
+//       return b.getAttribute(element) - a.getAttribute(element);
+//     });
+//   }
+
+//   newColl.forEach((item, index, array) => {
+//     tbody.append(item);
+//   });
+// }

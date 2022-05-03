@@ -267,7 +267,7 @@ body {
   display: block !important;
 }
 
-.btn-sort-age,
+/* .btn-sort-age,
 .btn-sort-id,
 .btn-sort-class,
 .btn-sort-sibsp,
@@ -275,7 +275,7 @@ body {
 .btn-sort-ticket,
 .btn-sort-fare {
   display: none;
-}
+} */
 
 .button-add label input {
   margin-top: 8px;
